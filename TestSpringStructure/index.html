@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table border="2">
+<thead>
+<tr>
+<td>id</td>
+<td>Name</td>
+<td>Address</td>
+<td>Salary</td>
+</tr>
+</thead>
+<body>
+<tr th:each="fetch: ${ref}">
+<td th:text="fetch.id"></td>
+<td th:text="fetch.name"></td>
+<td th:text="fetch.salary"></td>
+<td th:text="fetch.address"></td>
+</tr>
+</body>
+</table>
+</body>
+</html>
