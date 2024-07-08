@@ -6,7 +6,11 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -17,7 +21,7 @@ public class EmployeeController {
 	EmployeeService employeeService;
 	
 	
-	@RequestMapping("/index")
+	@RequestMapping("/")
 	public String display(Model model) {
 		
 		List<Employee> list =employeeService.displayData();
@@ -29,15 +33,29 @@ public class EmployeeController {
 		
 	}
 	
-	@RequestMapping("/employee")
-	public void saveData() {
-		
+	@RequestMapping("/add")
+	public String saveData(Model model) {
 		Employee emp = new Employee();
-		Scanner scanner = new Scanner(System.in);
-		emp.setId(scanner.nextInt());
-		emp.setName(scanner.next());
-		emp.setAddress(scanner.next());
-		emp.setSalary(scanner.nextFloat());
-		employeeService.saveData(emp);
+		model.addAttribute("emp", emp); 
+	return "add_data";
 	}
+	
+	@RequestMapping(value= "/new", method = RequestMethod.POST)
+	public String calledSave(@ModelAttribute("emp") Employee emp) {
+		
+		employeeService.saveData(emp);
+		System.out.print("Called without add");
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/editEmp/{id}")
+	public ModelAndView showEditEmp(@PathVariable(name = "id") Long id) {
+		ModelAndView view = new ModelAndView("edit_emp");
+		Employee emp= employeeService.getEmp(id);
+		System.out.println(emp.getName());
+		view.addObject("emp", emp);
+		return view;
+		
+	}
+	
 }

@@ -12,24 +12,18 @@ import jakarta.persistence.Table;
 public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	int id;
+	long id;
 	String name;
 	float salary;
 	String address;
-	public Employee(int id, String name, float salary, String address) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.salary = salary;
-		this.address = address;
-	}
+
 	public Employee() {
 		super();
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
